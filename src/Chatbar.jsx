@@ -4,12 +4,17 @@ class Chatbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messageText: ''
+      messageText: '',
+      currentUser: ''
     };
   }
 
   onMessageTextChange(event) {
     this.setState({messageText: event.target.value});
+  }
+
+  onCurrentUserChange(event) {
+    this.setState({currentUser: event.target.value});
   }
 
   onMessageKeyPress(event) {
@@ -24,7 +29,11 @@ class Chatbar extends Component {
     console.log('Rendering <Chatbar/>');
     return (
       <footer className="chatbar">
-        <input className="chatbar-username" placeholder="Your Name (Optional)" />
+        <input 
+          value={this.state.currentUser}
+          onChange={this.onCurrentUserChange.bind(this)}
+          className="chatbar-username" 
+          placeholder="Your Name (Optional)" />
         <input
           value={this.state.messageText}
           onChange={this.onMessageTextChange.bind(this)}
