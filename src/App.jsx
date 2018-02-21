@@ -31,7 +31,7 @@ componentDidMount() {
   this.socket = new WebSocket('ws://localhost:3001/');
   this.socket.onopen = (event) => {
     console.log('connected to ws-server');
-    this.socket.send('newMessages');
+    // this.socket.send('newMessages');
   }
 
   setTimeout(() => {
@@ -54,7 +54,7 @@ componentDidMount() {
 
   newMessage(messageText, currentUser) {
     const newMessageObject = {
-      id: Math.random(),
+      id: null,
       type: 'user',
       user: currentUser,
       text: messageText
