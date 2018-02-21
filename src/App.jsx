@@ -45,11 +45,11 @@ componentDidMount() {
   }, 3000);
 }
 
-  newMessage(messageText) {
+  newMessage(messageText, currentUser) {
     const newMessageObject = {
       id: Math.random(),
       type: 'user',
-      user: this.state.user,
+      user: currentUser,
       text: messageText
     };
     const newMessages = this.state.messages.concat(newMessageObject);

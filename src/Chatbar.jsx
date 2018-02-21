@@ -19,8 +19,9 @@ class Chatbar extends Component {
 
   onMessageKeyPress(event) {
     if (event.key === 'Enter') {
+      const currentUser = (this.state.currentUser.length <= 0 ? 'Anonymous' : this.state.currentUser);
       // they pressed enter!
-      this.props.newMessage(this.state.messageText);
+      this.props.newMessage(this.state.messageText, currentUser);
       this.setState({messageText: ''});
     }
   }
@@ -33,7 +34,7 @@ class Chatbar extends Component {
           value={this.state.currentUser}
           onChange={this.onCurrentUserChange.bind(this)}
           className="chatbar-username" 
-          placeholder="Your Name (Optional)" />
+          placeholder="Your Name (Optional)"/>
         <input
           value={this.state.messageText}
           onChange={this.onMessageTextChange.bind(this)}
