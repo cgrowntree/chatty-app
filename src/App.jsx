@@ -8,19 +8,18 @@ class App extends Component {
     super(props);
     this.state = {
       user: 'Anonymous',
-      messages: [
-        {
-          id: 1,
-          type: 'system',
-          text: 'Chris changed their name to artist formerly known as Chris'
-        }, 
-        {
-          id: 2,
-          type: 'user',
-          text: 'hi',
-          user: 'artist formerly known as Chris'
-        }
-      ]
+      messages: []
+        // {
+        //   id: 1,
+        //   type: 'system',
+        //   text: 'Chris changed their name to artist formerly known as Chris'
+        // }, 
+        // {
+        //   id: 2,
+        //   type: 'user',
+        //   text: 'hi',
+        //   user: 'artist formerly known as Chris'
+        // }
     };
   }
 
@@ -32,6 +31,7 @@ componentDidMount() {
   this.socket = new WebSocket('ws://localhost:3001/');
   this.socket.onopen = (event) => {
     console.log('connected to ws-server');
+    this.socket.send('newMessages');
   }
 
   setTimeout(() => {
@@ -59,12 +59,13 @@ componentDidMount() {
       user: currentUser,
       text: messageText
     };
-    const newMessages = this.state.messages.concat(newMessageObject);
-    this.setState({
-      messages: newMessages
-    });
+    // const newMessages = this.state.messages.concat(newMessageObject);
+    // this.setState({
+    //   messages: newMessages
+    // });
+    this.socket.send(JSON.stringify(newMessageObject));
   }
-  
+
   render() {
     return (
       <div>
