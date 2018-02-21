@@ -24,6 +24,27 @@ class App extends Component {
     };
   }
 
+// onload do this...
+componentDidMount() {
+  console.log('componentDidMount <App />');
+  setTimeout(() => {
+    console.log('Simulating incoming message');
+    // Add a new message to the list of messages in the data store
+    const newMessageObject = {
+      id: 3, 
+      type: 'user',
+      user: 'Michelle', 
+      text: 'Hello there!'
+    };
+    const newMessages = this.state.messages.concat(newMessageObject)
+    // Update the state of the app component.
+    // Calling setState will trigger a call to render() in App and all child components.
+    this.setState({
+      messages: newMessages
+    })
+  }, 3000);
+}
+
   newMessage(messageText) {
     const newMessageObject = {
       id: Math.random(),
