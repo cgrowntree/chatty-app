@@ -32,16 +32,41 @@ wss.broadcast = function broadcast(data) {
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
+  //Return the count of users on connect
+  console.log('Users connected:', wss.clients.size);
+  const usersConnected = {
+    type: 'connectionCount',
+    usersCount: wss.clients.size
+  }
+  wss.broadcast(JSON.stringify(usersConnected));
+
   //Recieves a new message, parses it and adds the uuid to it.
   ws.on('message', (message) => {
     const userMessage = JSON.parse(message);
     userMessage.id = uuid();
     console.log('received:', userMessage);
 
-    // Broadcast to everyone else.
-    wss.broadcast(JSON.stringify(userMessage));
+    if (userMessage.type === 'user') {
+      wss.broadcast(JSON.stringify(userMessage));
+    } else if (userMessage.type === 'system') {
+      wss.broadcast(JSON.stringify(userMessage));
+    } else {
+      console.log('errored');
+    }
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => { 
+    console.log('Client disconnected')
+
+    //Return the count of users on disconnect
+    console.log('Users connected:', wss.clients.size);
+    const usersConnected = {
+      usersCount: wss.clients.size
+    }
+    wss.broadcast(JSON.stringify(usersConnected));
+  });
+
+  ws.on('error', () => console.log('errored'));
+
 });

@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userCount: 0,
       usernameState: 'Anonymous',
       messages: [],
         // {
@@ -36,11 +37,27 @@ componentDidMount() {
 
   //Display incoming message from server on the client
   this.socket.onmessage = (event) => {
-    console.log(event.data);
-  
-    const newMessages = this.state.messages.concat(JSON.parse(event.data));
-    
-    this.setState({messages: newMessages});
+    // const newMessages = this.state.messages.concat(JSON.parse(event.data));
+    const data = JSON.parse(event.data);
+    console.log(data);
+
+    //Add the new incoming message from the server to the object for the clients
+    const userData = this.state.messages.concat(data);
+
+    switch(data.type) {
+      case 'user':
+        this.setState({messages: userData});
+        break;
+      case 'system':
+        this.setState({messages: userData});
+        break;
+      case 'connectionCount':
+          this.setState({userCount: data.usersCount})
+        break;
+      default:
+        // show an error in the console if the message type is unknown
+        throw new Error('Unknown event type ' + data.type);
+    }
   };
 
   setTimeout(() => {
@@ -88,7 +105,7 @@ componentDidMount() {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar userCount={this.state.userCount} />
         <MessageList messages={this.state.messages} />
         <Chatbar newMessage={this.newMessage.bind(this)} />
       </div>
