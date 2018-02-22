@@ -34,6 +34,13 @@ componentDidMount() {
     // this.socket.send('newMessages');
   }
 
+  //Display incoming message from server on the client
+  this.socket.onmessage = (event) => {
+    console.log(event.data);
+    const newMessages = this.state.messages.concat(JSON.parse(event.data));
+    this.setState({messages: newMessages});
+  }
+
   setTimeout(() => {
     console.log('Simulating incoming message');
     // Add a new message to the list of messages in the data store
@@ -63,6 +70,8 @@ componentDidMount() {
     // this.setState({
     //   messages: newMessages
     // });
+
+    //Send new message to the server
     this.socket.send(JSON.stringify(newMessageObject));
   }
 
