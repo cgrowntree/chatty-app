@@ -62,6 +62,7 @@ wss.on('connection', (ws) => {
     //Return the count of users on disconnect
     console.log('Users connected:', wss.clients.size);
     const usersConnected = {
+      type: 'connectionCount',
       usersCount: wss.clients.size
     }
     wss.broadcast(JSON.stringify(usersConnected));
