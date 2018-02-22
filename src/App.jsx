@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       userCount: 0,
+      userColor: '',
       usernameState: 'Anonymous',
       messages: [],
         // {
@@ -53,6 +54,9 @@ componentDidMount() {
         break;
       case 'connectionCount':
           this.setState({userCount: data.usersCount})
+        break;
+      case 'userColor':
+          this.setState({userColor: data.color})
         break;
       default:
         // show an error in the console if the message type is unknown

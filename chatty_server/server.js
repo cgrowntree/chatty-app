@@ -40,14 +40,21 @@ wss.on('connection', (ws) => {
   }
   wss.broadcast(JSON.stringify(usersConnected));
 
+  // Array with colors for usernames
+  const colors = ['#a3fd7f', '#BA8146', '#465E5F', '#54302C', '#851313', '#373427', '#775D45', '#78836A', '#949B70', '#20394C', '#453345']
+  //Assign random color for each connected user
+  ws.color = colors[Math.floor(Math.random()*colors.length)];
+
   //Recieves a new message, parses it and adds the uuid to it.
   ws.on('message', (message) => {
     const userMessage = JSON.parse(message);
     userMessage.id = uuid();
+    userMessage.color = ws.color;
     console.log('received:', userMessage);
 
     if (userMessage.type === 'user') {
       wss.broadcast(JSON.stringify(userMessage));
+      // wss.broadcast(JSON.stringify(userColor));
     } else if (userMessage.type === 'system') {
       wss.broadcast(JSON.stringify(userMessage));
     } else {

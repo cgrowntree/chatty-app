@@ -7,7 +7,7 @@ class MessageList extends Component {
       if (message.type === 'user') {
         return (
           <div key={message.id} className="message">
-            <span className="message-username">{message.user}</span>
+            <span className="message-username" style={{color: message.color}}>{message.user}</span>
             <span className="message-content">{message.text}</span>
           </div>
         );
