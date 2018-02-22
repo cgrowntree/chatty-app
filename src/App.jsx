@@ -7,8 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: 'Anonymous',
-      messages: []
+      usernameState: 'Anonymous',
+      messages: [],
         // {
         //   id: 1,
         //   type: 'system',
@@ -37,9 +37,11 @@ componentDidMount() {
   //Display incoming message from server on the client
   this.socket.onmessage = (event) => {
     console.log(event.data);
+  
     const newMessages = this.state.messages.concat(JSON.parse(event.data));
+    
     this.setState({messages: newMessages});
-  }
+  };
 
   setTimeout(() => {
     console.log('Simulating incoming message');
@@ -66,13 +68,21 @@ componentDidMount() {
       user: currentUser,
       text: messageText
     };
-    // const newMessages = this.state.messages.concat(newMessageObject);
-    // this.setState({
-    //   messages: newMessages
-    // });
+
+    //If the current user changes their name send a message stating the name change
+    if (this.state.usernameState !== currentUser) {
+      const usernameStateChange = {
+        id: null,
+        type: 'system',
+        text: `${this.state.usernameState} has changed their name to ${currentUser}`
+      }
+      this.socket.send(JSON.stringify(usernameStateChange));
+    }
 
     //Send new message to the server
     this.socket.send(JSON.stringify(newMessageObject));
+    //Set currentUser obj to the username from the most recent message
+    this.setState({usernameState: currentUser})
   }
 
   render() {

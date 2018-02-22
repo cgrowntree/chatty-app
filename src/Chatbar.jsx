@@ -19,6 +19,7 @@ class Chatbar extends Component {
 
   onMessageKeyPress(event) {
     if (event.key === 'Enter') {
+      //check if current users name is empty. If contains content, send the username with the message
       const currentUser = (this.state.currentUser.length <= 0 ? 'Anonymous' : this.state.currentUser);
       // they pressed enter!
       this.props.newMessage(this.state.messageText, currentUser);

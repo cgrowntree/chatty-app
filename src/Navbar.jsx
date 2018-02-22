@@ -5,7 +5,7 @@ class Navbar extends Component {
     console.log('Rendering <Navbar/>');
     return (
       <nav className="navbar">
-        <a href="/" className="navbar-brand">Chack</a>
+        <a href="/" className="navbar-brand">Slacker</a>
       </nav>
     );
   }
