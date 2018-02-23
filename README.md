@@ -4,8 +4,7 @@ Chatty App
 A multi-client real-time chat app. Primarily a client-side single-page app built with ReactJS. The client-side app communicates with a server via WebSockets for multi-user real-time updates.
 
 ## Screenshots
-!["Screenshot of enter note page"](https://github.com/DavidFok/Project-Werb/blob/master/docs/werb-enter_note.png)
-!["Screenshot of enter saved notes page"](https://github.com/DavidFok/Project-Werb/blob/master/docs/werb-note_page.png)
+!["Screenshot of app"](https://github.com/cgrowntree/chatty-app/blob/master/docs/chatty-main.png)
 
 ### Running the project on your local machine
 
