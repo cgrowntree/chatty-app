@@ -41,7 +41,7 @@ wss.on('connection', (ws) => {
   wss.broadcast(JSON.stringify(usersConnected));
 
   // Array with colors for usernames
-  const colors = ['#a3fd7f', '#BA8146', '#465E5F', '#54302C', '#851313', '#373427', '#775D45', '#78836A', '#949B70', '#20394C', '#453345']
+  const colors = ['#fd7f7f', '#fdc87f', '#fdf47f', '#9efd7f', '#7ffddb', '#7fb1fd', '#a27ffd', '#e77ffd', '#fd7fb9']
   //Assign random color for each connected user
   ws.color = colors[Math.floor(Math.random()*colors.length)];
 
@@ -54,7 +54,6 @@ wss.on('connection', (ws) => {
 
     if (userMessage.type === 'user') {
       wss.broadcast(JSON.stringify(userMessage));
-      // wss.broadcast(JSON.stringify(userColor));
     } else if (userMessage.type === 'system') {
       wss.broadcast(JSON.stringify(userMessage));
     } else {
@@ -74,7 +73,7 @@ wss.on('connection', (ws) => {
     }
     wss.broadcast(JSON.stringify(usersConnected));
   });
-
+  //Handle errors
   ws.on('error', () => console.log('errored'));
 
 });
